@@ -1,0 +1,161 @@
+# Using threejs with the help of a cdn 
+-> Search for threejs cdn there select the version as 16.0.0 and select threemin.js script tag and paste it in our body tag before the sript.js.
+-> We are ready to use threejs.
+
+# Creating a scene
+const scene = new THREE.Scene(); // This will create a scene we can view the elements in the scene.
+-> If we want to see anything we have to add it into the scene.
+
+# Camera
+const camera = new THREE.PerspectiveCamera( fov, aspect ratio, near, far );
+-> PerspectiveCamera it is basically like our eyes.
+-> fov: it is the view range of our eye how much we can see .Jitna fov kam hoga hum utna hi jaada zoomed in hai.Fov jitna jada hoga hum utna hi jada dekh skte hai.
+-> Aspect Ratio : window.innerWidth / window.innerHeight // camera should view how much height and width.
+-> Near: camera kitne pass waale object ko dekhe.
+-> Far: camera kitne dur ki cheejein dikhayege
+sytax: 
+const camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 0.1, 1000 );
+
+const geometry = new THREE.BoxGeometry( 1, 1, 1 );// This tells us about the type of geometry we want to use.Here it is BoxGeometry(x,y,z)
+
+const material = new THREE.MeshBasicMaterial( { color: "yellow", wireframe: true } );// The material through which we are gona wrap our geometry is material
+const cube = new THREE.Mesh( geometry, material );
+//This is putting material onto the geometry ( Ye basically geometry ko material se poora cover krr rha hai)
+scene.add( cube );// Adding the cube to our scene.
+
+camera.position.z = 5; // Moving the camera back so that we can view the cube because we were inside the cube before but when we move camera back then we move out of the cube.
+
+const canvas = document.querySelector("canvas");
+const renderer = new THREE.WebGLRenderer({ canvas });//Renderer is basically a camera which will show us our scene on canvas or we can say it will reneder our scene
+renderer.setSize( window.innerWidth, window.innerHeight ); //here we are setting the size of renderer how much width and height renderer should render/ show.
+
+function animate() { 
+    window.requestAnimationFrame(animate);
+	renderer.render( scene, camera );
+    cube.rotation.x += 0.01;
+    cube.rotation.y += 0.01;
+} // for moving the element we create animate function 
+renderer.setAnimationLoop( animate );// this will keep repeating the animation again and again
+
+cube.rotation.x += 0.01;
+cube.rotation.y += 0.01;// This will rotate our cube in x and y axis
+
+# Box geometry 
+-> BoxGeometry is a geometry class for a rectangular cuboid with a given 'width', 'height', and 'depth'. On creation, the cuboid is centred on the origin, with each edge parallel to one of the axes.
+-> It is created using the properties of buffer geometry.
+-> Box Geometry can use all the properties of the buffer geometry also.
+-> Constructor 
+// BoxGeometry(width : Float, height : Float, depth : Float, widthSegments : Integer, heightSegments : Integer, depthSegments : Integer)
+// width — Width; that is, the length of the edges parallel to the X axis. Optional; defaults to 1.
+// height — Height; that is, the length of the edges parallel to the Y axis. Optional; defaults to 1.
+// depth — Depth; that is, the length of the edges parallel to the Z axis. Optional; defaults to 1.
+// widthSegments — Number of segmented rectangular faces along the width of the sides. Optional; defaults to 1.
+// heightSegments — Number of segmented rectangular faces along the height of the sides. Optional; defaults to 1.
+// depthSegments — Number of segmented rectangular faces along the depth of the sides. Optional; defaults to 1.
+
+# Transformation ,Scaling and rotation
+cube.position.x = 1; // this will move the cube by 1 in x axis.
+cube.position.y = 1; // this will move the cube by 1 in Y axis.
+cube.position.z = 1; // this will move the cube by 1 in z axis.
+
+cube.rotation.x += 1; // this will rotate the cube around x axis by 1 .
+cube.rotation.y += 1; // this will rotate the cube around y axis by 1 .
+cube.rotation.z += 1; // this will rotate the cube around z axis.
+renderer.render(scene, camera); // this line will keep on printing/ rendering the scene again and again after each of the rotation so this will make the cube rotate;
+
+cube.scale.x = 3; // this will scale the cube in x axis
+cube.scale.y = 3; // this will scale the cube in y axis
+cube.scale.z = 3; // this will scale the cube in z axis
+
+# Vite setup of Threejs 
+// Integrating Tailwind css with Vite
+-> Using vite we will create a new vanilla js folder 
+syntax : npm create vite@latest 
+select vanilla -> javascript 
+cd folder 
+npm install 
+npm run dev 
+// This will create the vanilla js file using vite 
+-> Delete everything from main.js index.html and setup delete counter.js 
+-> create a index.css file 
+// Install Tailwind CSS 
+-> Go to tailwind website select framework as vite and install packages needed 
+
+-> To integrate Tailwind we need to use a script so that our tailwind get compiled everytime we change/add anything for that we need to install this package below
+npm install tailwindcss postcss-cli autoprefixer
+// IN package.json in script section add 
+"watch": "postcss index.css -o style.css --watch", // using watch we can run this "postcss index.css -o style.css --watch" command this will keep looking on our code and pick tailwind code from index.css and give its output on style.css
+
+npm run watch on one terminal and npm run dev on the other terminal .
+-> npm run watch will 
+
+# Installing ThreeJS with vite 
+npm i three // this will install all threejs package
+-> Link main.js to our index.html file set type = "module" and then we can start using threejs package
+
+// main.js
+import * as THREE from "three";
+
+const scene = new THREE.Scene();
+
+const camera = new THREE.PerspectiveCamera(75,window.innerWidth / window.innerHeight, 0.1, 20);
+
+const geometry = new THREE.BoxGeometry(1,1,1,6,6,6);
+const material = new THREE.MeshBasicMaterial({color: "red", wireframe: true});
+const cube= new THREE.Mesh(geometry,material);
+
+camera.position.z = 5;
+
+
+scene.add(cube);
+
+const canvas = document.querySelector("canvas");
+const renderer = new THREE.WebGLRenderer({canvas});
+renderer.setSize( window.innerWidth, window.innerHeight );
+renderer.render(scene, camera);
+
+function animate(){
+    window.requestAnimationFrame(animate);
+    cube.rotation.y += 0.01;
+    renderer.render(scene, camera);
+}
+
+animate();
+
+# Rotation and grouping in ThreeJS
+-> In ThreeJS 90 Degree = 1.57
+180 Degree = 3.14
+270 Degree = 1.57*3
+360 Degree = 1.57*4
+// So if we want to rotate the element 90 deg then we can rotate it by using Math.PI / 2; This will rotate the element by 90deg
+90 = pi/2
+180 = pi
+270 = (pi/2)*3
+
+# Group 
+-> If we have two or more elements and we want to move the elements togther then we can group them.
+const group = new THREE.Group();
+group.add(cube);
+group.add(sphere);
+
+scene.add(group); // this will add the gropu of elements to the scene
+
+# Animations in ThreeJS
+-> If we have two or more elements and we want to move the elements then we create an animation function that will move the elements.
+-> FPS : frame per second this means how much frames / images it can take in 1second.
+Eg: 60FPS = 60 Frames in 1sec.
+// Animate function 
+function animate(){
+    window.requestAnimationFrame(animate);
+    
+}
+
+animate();
+
+-> window.requestAnimationFrame(animate);// this will run the animate function for every frame. In 1 sec 60 times the animate function will run
+
+Note : tmhari website ka animation code kissi ke laptop me tezz chlega kyoki vo laptop jada fps ka hai aur purane laptop prr slow chlega and we don't want this to happen. For this we have a way in threejs to avoid it.
+let clock = new THREE.Clock();// create clock before the animate function using this clock we will return time because time always remain same for all of us.
+mesh.rotation.y = clock.getElapsedTime();// It tells us how much time has been passed ,inside animate function
+// If we want to move it fast we can multiply it with values
+Eg: mesh.rotation.y = clock.getElapsedTime() * 2;
