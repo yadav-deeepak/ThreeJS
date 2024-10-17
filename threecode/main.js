@@ -4,8 +4,8 @@ const scene = new THREE.Scene();
 
 const camera = new THREE.PerspectiveCamera(75,window.innerWidth / window.innerHeight, 0.1, 20);
 
-const cubegeo = new THREE.BoxGeometry(1,1,1,6,6,6);
-const cubemat = new THREE.MeshBasicMaterial({color: "red", wireframe: true});
+const cubegeo = new THREE.BoxGeometry(1,1,1);
+const cubemat = new THREE.MeshBasicMaterial({color: "#00FFFF", wireframe: true});
 const cube= new THREE.Mesh(cubegeo,cubemat);
 
 // cube.position.x = -1;
@@ -34,14 +34,22 @@ const renderer = new THREE.WebGLRenderer({canvas});
 renderer.setSize( window.innerWidth, window.innerHeight );
 renderer.render(scene, camera);
 
-let clock = new THREE.Clock();
-function animate(){
+function animate() {
     window.requestAnimationFrame(animate);
-    cube.rotation.y = clock.getElapsedTime();
+    cube.rotation.y += 0.01;
+    cube.rotation.x += 0.01;
+    cube.rotation.z += 0.01;
     renderer.render(scene, camera);
 }
-
 animate();
+// let clock = new THREE.Clock();
+// function animate(){
+//     window.requestAnimationFrame(animate);
+//     cube.rotation.y = clock.getElapsedTime();
+//     renderer.render(scene, camera);
+// }
+
+// animate();
 
 // function animate(){
 //     window.requestAnimationFrame(animate);

@@ -159,3 +159,42 @@ let clock = new THREE.Clock();// create clock before the animate function using 
 mesh.rotation.y = clock.getElapsedTime();// It tells us how much time has been passed ,inside animate function
 // If we want to move it fast we can multiply it with values
 Eg: mesh.rotation.y = clock.getElapsedTime() * 2;
+
+# Understanding Geometry in ThreeJS 
+// Box Geometry 
+-> BoxGeometry is a geometry class for a rectangular cuboid with a given 'width', 'height', and 'depth'. On creation, the cuboid is centred on the origin, with each edge parallel to one of the axes.
+-> Constructor 
+   BoxGeometry(width : Float, height : Float, depth : Float, widthSegments : Integer, heightSegments : Integer, depthSegments : Integer)
+
+width — Width; that is, the length of the edges parallel to the X axis. Optional; defaults to 1.
+height — Height; that is, the length of the edges parallel to the Y axis. Optional; defaults to 1.
+depth — Depth; that is, the length of the edges parallel to the Z axis. Optional; defaults to 1.
+widthSegments — Number of segmented rectangular faces along the width of the sides. Optional; defaults to 1.
+heightSegments — Number of segmented rectangular faces along the height of the sides. Optional; defaults to 1.
+depthSegments — Number of segmented rectangular faces along the depth of the sides. Optional; defaults to 1.
+
+// Capsule Geometry 
+-> CapsuleGeometry is a geometry class for a capsule with given radii and height. It is constructed using a lathe.
+-> Constructor
+   CapsuleGeometry(radius : Float, length : Float, capSegments : Integer, radialSegments : Integer)
+radius — Radius of the capsule. Optional; defaults to 1.
+length — Length of the middle section. Optional; defaults to 1.
+capSegments — Number of curve segments used to build the caps. Optional; defaults to 4.
+radialSegments — Number of segmented faces around the circumference of the capsule. Optional; defaults to 8.
+
+// Cone Geometry 
+-> A class for generating cone geometry.
+-> Constructor 
+   ConeGeometry(radius : Float, height : Float, radialSegments : Integer, heightSegments : Integer, openEnded : Boolean, thetaStart : Float, thetaLength : Float)
+radius — Radius of the cone base. Default is 1.
+height — Height of the cone. Default is 1.
+radialSegments — Number of segmented faces around the circumference of the cone. Default is 32
+heightSegments — Number of rows of faces along the height of the cone. Default is 1.
+openEnded — A Boolean indicating whether the base of the cone is open or capped. Default is false, meaning capped.
+thetaStart — Start angle for first segment, default = 0 (three o'clock position).
+thetaLength — The central angle, often called theta, of the circular sector. The default is 2*Pi, which makes for a complete cone.
+
+// There are many more geometries go and visit the threejs docs.
+
+# Buffer Geometry 
+-> A representation of mesh, line, or point geometry. Includes vertex positions, face indices, normals, colors, UVs, and custom attributes within buffers, reducing the cost of passing all this data to the GPU.
