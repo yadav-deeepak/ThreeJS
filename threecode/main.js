@@ -1,12 +1,26 @@
 import * as THREE from "three";
+import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 
 const scene = new THREE.Scene();
 
 const camera = new THREE.PerspectiveCamera(75,window.innerWidth / window.innerHeight, 0.1, 20);
 
-const cubegeo = new THREE.BoxGeometry(1,1,1);
-const cubemat = new THREE.MeshBasicMaterial({color: "#00FFFF", wireframe: true});
-const cube= new THREE.Mesh(cubegeo,cubemat);
+const geometry = new THREE.BufferGeometry();
+let vertices = new Float32Array(3000);
+
+for(let i=0; i<= 1000*3 ; i++){
+    vertices[i] = (Math.random() - 0.5)*5;
+}
+
+geometry.setAttribute('position', new THREE.BufferAttribute(vertices, 3));
+const material = new THREE.MeshBasicMaterial({color: "red", wireframe: true});
+const mesh = new THREE.Mesh(geometry, material);
+
+
+
+// const cubegeo = new THREE.BoxGeometry(1,1,1);
+// const cubemat = new THREE.MeshBasicMaterial({color: "#00FFFF", wireframe: true});
+// const cube= new THREE.Mesh(cubegeo,cubemat);
 
 // cube.position.x = -1;
 
@@ -22,23 +36,27 @@ const cube= new THREE.Mesh(cubegeo,cubemat);
 
 // group.position.x = 2;
 
-camera.position.z = 5;
+camera.position.z = 3;
 
 // scene.add(group);
-scene.add(cube);
+scene.add(mesh);
 
 
 
 const canvas = document.querySelector("canvas");
 const renderer = new THREE.WebGLRenderer({canvas});
 renderer.setSize( window.innerWidth, window.innerHeight );
-renderer.render(scene, camera);
+// renderer.render(scene, camera);
+
+const controls = new OrbitControls( camera, renderer.domElement );
+controls.enableDamping = true;
+controls.dampingFactor = 1
 
 function animate() {
-    window.requestAnimationFrame(animate);
-    cube.rotation.y += 0.01;
-    cube.rotation.x += 0.01;
-    cube.rotation.z += 0.01;
+    window.requestAnimationFrame( animate );
+    mesh.rotation.y += 0.01;
+    camera.position.z -=0.01;
+    controls.update();
     renderer.render(scene, camera);
 }
 animate();

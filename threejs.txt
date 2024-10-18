@@ -198,3 +198,26 @@ thetaLength — The central angle, often called theta, of the circular sector. T
 
 # Buffer Geometry 
 -> A representation of mesh, line, or point geometry. Includes vertex positions, face indices, normals, colors, UVs, and custom attributes within buffers, reducing the cost of passing all this data to the GPU.
+const geometry = new THREE.BufferGeometry();
+
+// create a simple square shape. We duplicate the top left and bottom right
+// vertices because each vertex needs to appear once per triangle.
+const vertices = new Float32Array( [
+	-1.0, -1.0,  1.0, // v0
+	 1.0, -1.0,  1.0, // v1
+	 1.0,  1.0,  1.0, // v2
+
+	 1.0,  1.0,  1.0, // v3
+	-1.0,  1.0,  1.0, // v4
+	-1.0, -1.0,  1.0  // v5
+] );
+
+// v0,v1,v2 will create one phase v3,v4,v5 will create another phase.
+
+// itemSize = 3 because there are 3 values (components) per vertex
+geometry.setAttribute( 'position', new THREE.BufferAttribute( vertices, 3 ) );
+const material = new THREE.MeshBasicMaterial( { color: 0xff0000 } );
+const mesh = new THREE.Mesh( geometry, material );
+
+-> In threejs every thing is made using a triangle for creating a triangle we need 3 points for one poiny we have to give the value (x,y,z) value.
+-> In buffer geometry we give points and by joining points we create the element or object.
