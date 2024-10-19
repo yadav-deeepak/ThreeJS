@@ -221,3 +221,50 @@ const mesh = new THREE.Mesh( geometry, material );
 
 -> In threejs every thing is made using a triangle for creating a triangle we need 3 points for one poiny we have to give the value (x,y,z) value.
 -> In buffer geometry we give points and by joining points we create the element or object.
+
+# Introduction to materials in threejs
+-> Materials describe the appearance of objects. They are defined in a (mostly) renderer-independent way, so you don't have to rewrite materials if you decide to use a different renderer.
+
+# MeshBasicMaterial
+-> A material for drawing geometries in a simple shaded (flat or wireframe) way.
+-> This material is not affected by lights.
+// Constructor 
+-> MeshBasicMaterial( parameters : Object )
+   //parameters - (optional) an object with one or more properties defining the material's appearance. Any property of the material (including any property inherited from Material) can be passed in here.
+
+# MeshStandardMaterial
+-> A standard physically based material, using Metallic-Roughness workflow.
+-> Physically based rendering (PBR) has recently become the standard in many 3D applications, such as Unity, Unreal and 3D Studio Max.
+-> This approach differs from older approaches in that instead of using approximations for the way in which light interacts with a surface, a physically correct model is used. The idea is that, instead of tweaking materials to look good under specific lighting, a material can be created that will react 'correctly' under all lighting scenarios.
+-> In practice this gives a more accurate and realistic looking result than the MeshLambertMaterial or MeshPhongMaterial, at the cost of being somewhat more computationally expensive. MeshStandardMaterial uses per-fragment shading.
+-> Note that for best results you should always specify an environment map when using this material.
+// Constructor 
+-> MeshStandardMaterial( parameters : Object )
+parameters - (optional) an object with one or more properties defining the material's appearance. Any property of the material (including any property inherited from Material) can be passed in here.
+-> Without light we can't use the MeshStandardMaterial.
+// Creating light 
+const light = new THREE.DirectionalLight("white", 2);
+light.position.set(1,1,1);
+scene.add(light);
+
+const helper = new THREE.DirectionalLightHelper( light, .8 );
+scene.add( helper ); //helper will tell use from where light is created or coming from
+
+# MeshNormalMaterial 
+-> A material that maps the normal vectors to RGB colors.
+// Constructor 
+-> MeshNormalMaterial( parameters : Object )
+parameters - (optional) an object with one or more properties defining the material's appearance. Any property of the material (including any property inherited from Material) can be passed in here.
+
+# MeshPhysicalMaterial
+-> An extension of the MeshStandardMaterial, providing more advanced physically-based rendering properties:
+-> Anisotropy: Ability to represent the anisotropic property of materials as observable with brushed metals.
+-> Clearcoat: Some materials — like car paints, carbon fiber, and wet surfaces — require a clear, reflective layer on top of another layer that may be irregular or rough. Clearcoat approximates this effect, without the need for a separate transparent surface.
+-> Iridescence: Allows to render the effect where hue varies depending on the viewing angle and illumination angle. This can be seen on soap bubbles, oil films, or on the wings of many insects.
+-> Physically-based transparency: One limitation of .opacity is that highly transparent materials are less reflective. Physically-based .transmission provides a more realistic option for thin, transparent surfaces like glass.
+-> Advanced reflectivity: More flexible reflectivity for non-metallic materials.
+-> Sheen: Can be used for representing cloth and fabric materials.
+-> As a result of these complex shading features, MeshPhysicalMaterial has a higher performance cost, per pixel, than other three.js materials. Most effects are disabled by default, and add cost as they are enabled. For best results, always specify an environment map when using this material.
+// Constructor 
+MeshPhysicalMaterial( parameters : Object )
+parameters - (optional) an object with one or more properties defining the material's appearance. Any property of the material (including any property inherited from Material and MeshStandardMaterial) can be passed in here.
