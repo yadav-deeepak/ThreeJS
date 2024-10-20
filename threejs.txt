@@ -268,3 +268,8 @@ parameters - (optional) an object with one or more properties defining the mater
 // Constructor 
 MeshPhysicalMaterial( parameters : Object )
 parameters - (optional) an object with one or more properties defining the material's appearance. Any property of the material (including any property inherited from Material and MeshStandardMaterial) can be passed in here.
+
+# Texture
+let textureLoader = new THREE.TextureLoader();// This single textureLoader is used to load the texture. We can add multiple texture using the single textureLoader.
+let tex = textureLoader.load("/public/earthmap1k.jpg");
+const material = new THREE.MeshPhysicalMaterial({map: tex});// Using the map property of the material add the texture to the material

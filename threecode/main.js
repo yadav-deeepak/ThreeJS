@@ -20,11 +20,15 @@ const light = new THREE.DirectionalLight("white", 2);
 light.position.set(1,1,1);
 scene.add(light);
 
-const helper = new THREE.DirectionalLightHelper( light, .8 );
-scene.add( helper ); //helper will tell use from where light is created or coming from
+// const helper = new THREE.DirectionalLightHelper( light, .8 );
+// scene.add( helper ); //helper will tell use from where light is created or coming from
+
+let textureLoader = new THREE.TextureLoader();
+let tex = textureLoader.load("/public/earthmap1k.jpg");
+tex.colorSpace = THREE.SRGBColorSpace;
 
 const cubegeo = new THREE.SphereGeometry(1,50,50);
-const material = new THREE.MeshPhysicalMaterial({color: "white"});
+const material = new THREE.MeshPhysicalMaterial({map: tex});
 // material.metalness = 1;
 // material.roughness =.3;
 // material.clearcoat = .2;
