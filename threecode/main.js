@@ -1,5 +1,6 @@
 import * as THREE from "three";
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+import {RGBELoader} from 'three/addons/loaders/RGBELoader.js';
 
 const scene = new THREE.Scene();
 
@@ -16,9 +17,9 @@ const camera = new THREE.PerspectiveCamera(75,window.innerWidth / window.innerHe
 // const material = new THREE.MeshBasicMaterial({color: "red", wireframe: true});
 // const mesh = new THREE.Mesh(geometry, material);
 
-const light = new THREE.DirectionalLight("white", 2);
-light.position.set(1,1,1);
-scene.add(light);
+// const light = new THREE.DirectionalLight("white", 2);
+// light.position.set(1,1,1);
+// scene.add(light);
 
 // const helper = new THREE.DirectionalLightHelper( light, .8 );
 // scene.add( helper ); //helper will tell use from where light is created or coming from
@@ -27,6 +28,9 @@ let textureLoader = new THREE.TextureLoader();
 let tex = textureLoader.load("/public/earthmap1k.jpg");
 tex.colorSpace = THREE.SRGBColorSpace;
 
+let tex2 = textureLoader.load("https://www.shutterstock.com/image-photo/isolated-white-clouds-on-black-260nw-684470536.jpg");
+tex2.colorSpace = THREE.SRGBColorSpace;
+
 const cubegeo = new THREE.SphereGeometry(1,50,50);
 const material = new THREE.MeshPhysicalMaterial({map: tex});
 // material.metalness = 1;
@@ -34,6 +38,21 @@ const material = new THREE.MeshPhysicalMaterial({map: tex});
 // material.clearcoat = .2;
 
 const cube= new THREE.Mesh(cubegeo,material);
+
+const geometry2 = new THREE.SphereGeometry(1.02,50,50);
+const material2 = new THREE.MeshPhysicalMaterial({alphaMap: tex2});
+material2.transparent = true;
+const mesh2 = new THREE.Mesh(geometry2, material2);
+
+let hdri = new RGBELoader();
+hdri.load("https://dl.polyhaven.org/file/ph-assets/HDRIs/hdr/4k/autumn_field_4k.hdr",function(hdritexture){
+    hdritexture.mapping = THREE.EquirectangularReflectionMapping;
+    scene.environment = hdritexture;
+});
+
+
+
+
 
 // cube.position.x = -1;
 
@@ -53,6 +72,8 @@ camera.position.z = 3;
 
 // scene.add(group);
 scene.add(cube);
+scene.add(mesh2);
+
 
 
 
@@ -67,7 +88,8 @@ controls.dampingFactor = 1
 
 function animate() {
     window.requestAnimationFrame( animate );
-    cube.rotation.y += 0.01;
+    cube.rotation.y += 0.002;
+    mesh2.rotation.y += 0.003;
     // camera.position.z -=0.01;
     controls.update();
     renderer.render(scene, camera);

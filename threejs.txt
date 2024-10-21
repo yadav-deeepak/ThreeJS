@@ -273,3 +273,27 @@ parameters - (optional) an object with one or more properties defining the mater
 let textureLoader = new THREE.TextureLoader();// This single textureLoader is used to load the texture. We can add multiple texture using the single textureLoader.
 let tex = textureLoader.load("/public/earthmap1k.jpg");
 const material = new THREE.MeshPhysicalMaterial({map: tex});// Using the map property of the material add the texture to the material
+
+# Using HDRI for realistic lighting in threejs
+tex.colorSpace = THREE.ColorSpace; // using this the colors will look properly
+// Ploy haven 
+-> When we go inside this website we can use the HDRI's we will cover it in lights section too. 
+-> Select outdoor then select natural lighting
+-> We get various lighting options and we can use them in our project
+-> copy the link address.
+For loading it we need RGBELoader this will load the HDRI
+import { RGBELoader } from "three/addons/loaders/RGBELoader.js";
+
+let hdri = new RGBELoader();
+hdri.load("https://dl.polyhaven.org/file/ph-assets/HDRIs/exr/4k/buikslotermeerplein_4k.exr", function(hdritexture){
+    hdritexture.mapping = THREE.EquirectangularReflectionMapping;
+    scene.environment = hdritexture
+}
+);
+
+# Alphamap
+-> alphamap will display the white part and hide the black part of the image if we use a black and white image.
+let tex2 = textureLoader.load("https://www.shutterstock.com/image-photo/isolated-white-clouds-on-black-260nw-684470536.jpg");
+tex2.colorSpace = THREE.SRGBColorSpace;
+const material2 = new THREE.MeshPhysicalMaterial({alphaMap: tex2});
+material2.transparent = true; 
