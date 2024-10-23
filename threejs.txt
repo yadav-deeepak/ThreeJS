@@ -297,3 +297,36 @@ let tex2 = textureLoader.load("https://www.shutterstock.com/image-photo/isolated
 tex2.colorSpace = THREE.SRGBColorSpace;
 const material2 = new THREE.MeshPhysicalMaterial({alphaMap: tex2});
 material2.transparent = true; 
+
+# Mouse Movement
+// lookAt 
+-> It is a part of object 3D.
+Eg: mesh.lookAt(-1,1,0) // this will make the object look at the given position.
+But we should not pass the position like this we should pass it in 
+mesh.lookAt(new THREE.Vector3(coordinate.x,coordinate.y,coordinate.z))
+-> So this is how we can make a object look at any point or any position .
+
+# Moving with Mouse
+const mouse = {
+  x:0,
+  y:0,
+};
+
+window.addEventListener("mousemove", function (e) {
+  mouse.x = e.clientX / window.innerWidth;
+  mouse.y = e.clientY / window.innerHeight;
+  console.log(e.clientX,e.clientY);
+});
+
+function animate(){
+    window.requestAnimationFrame(animate);
+    // cube.rotation.y += 0.01;
+    cube.lookAt(new THREE.Vector3(mouse.x-.5,-mouse.y+.5,1));
+    controls.update();
+    renderer.render(scene, camera);
+}
+
+animate();
+-> mouse.x-.5,-mouse.y+.5,1 
+// As we know that three js works on both positive and negative coordinates so we need to update y as negative so that it works properly
+// we have subtracted -.5 so that it starts from -.5 to +.5 and move in both x and -x direction properly(similarly for y also)
