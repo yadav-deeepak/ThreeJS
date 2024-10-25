@@ -330,3 +330,21 @@ animate();
 -> mouse.x-.5,-mouse.y+.5,1 
 // As we know that three js works on both positive and negative coordinates so we need to update y as negative so that it works properly
 // we have subtracted -.5 so that it starts from -.5 to +.5 and move in both x and -x direction properly(similarly for y also)
+
+# Making your threejs scene Responsive 
+window.addEventListener("resize", function (e) {
+  camera.aspect = window.innerWidth / window.innerHeight;
+  renderer.setSize( window.innerWidth, window.innerHeight);
+  camera.updateProjectionMatrix();
+});
+// Using this we can make our scene Responsive
+
+# Understanding Device Pixel Ratio in ThreeJS 
+-> Pixel color krna and draw krna pixel par threejs uses GPU
+-> Device pixel ratio (DPR) is the ratio between the physical pixels on a device's screen and the logical pixel.
+-> DPR is useful for dealing with the difference between rendering on a standard display versus a HiDPI or Retina display. For example, HiDPI and Retina displays use more screen pixels to draw the same objects, resulting in a sharper image
+-> You can use the window.devicePixelRatio property to determine the pixel density of a device. Most devices have a DPR between 1.0 and 4.0, but the ratio doesn't have to be a whole number.
+-> Mostly use device pixel ratio between 1 to 2 more the DPR more GPU it will need.
+Eg: renderer.setPixelRatio(window.devicePixelRatio); 
+// If we do this then it will set the Pixel ratio as the DPR of our device.
+renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2)); // This will select the minimum pixel so that more GPU should not be needed.

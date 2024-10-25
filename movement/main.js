@@ -18,6 +18,7 @@ scene.add(cube);
 const canvas = document.querySelector("canvas");
 const renderer = new THREE.WebGLRenderer({canvas});
 renderer.setSize( window.innerWidth, window.innerHeight );
+renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 renderer.render(scene, camera);
 
 const controls = new OrbitControls( camera, renderer.domElement );
@@ -32,11 +33,18 @@ window.addEventListener("mousemove", function (e) {
   console.log(e.clientX,e.clientY);
 });
 
+window.addEventListener("resize", function (e) {
+  camera.aspect = window.innerWidth / window.innerHeight;
+  renderer.setSize( window.innerWidth, window.innerHeight);
+  camera.updateProjectionMatrix();
+});
+
 function animate(){
     window.requestAnimationFrame(animate);
     // cube.rotation.y += 0.01;
     cube.lookAt(new THREE.Vector3(mouse.x-.5,-mouse.y+.5,1));
     controls.update();
+    cube.rotation.y += 0.01;
     renderer.render(scene, camera);
 }
 
