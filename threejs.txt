@@ -348,3 +348,6 @@ window.addEventListener("resize", function (e) {
 Eg: renderer.setPixelRatio(window.devicePixelRatio); 
 // If we do this then it will set the Pixel ratio as the DPR of our device.
 renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2)); // This will select the minimum pixel so that more GPU should not be needed.
+
+# Orbit controls
+->
