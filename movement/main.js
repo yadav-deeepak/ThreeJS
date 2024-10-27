@@ -22,6 +22,16 @@ renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 renderer.render(scene, camera);
 
 const controls = new OrbitControls( camera, renderer.domElement );
+// controls.minAzimuthAngle = -Math.PI / 4;
+// controls.maxAzimuthAngle = Math.PI / 4;
+
+controls.minPolarAngle = -Math.PI / 2; 
+controls.maxPolarAngle = Math.PI / 2;
+
+controls.minDistance = 3;
+controls.maxDistance = 10;
+
+
 const mouse = {
   x:0,
   y:0,
@@ -42,9 +52,9 @@ window.addEventListener("resize", function (e) {
 function animate(){
     window.requestAnimationFrame(animate);
     // cube.rotation.y += 0.01;
-    cube.lookAt(new THREE.Vector3(mouse.x-.5,-mouse.y+.5,1));
+    // cube.lookAt(new THREE.Vector3(mouse.x-.5,-mouse.y+.5,1));
     controls.update();
-    cube.rotation.y += 0.01;
+    // cube.rotation.y += 0.01;
     renderer.render(scene, camera);
 }
 

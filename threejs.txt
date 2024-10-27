@@ -350,4 +350,38 @@ Eg: renderer.setPixelRatio(window.devicePixelRatio);
 renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2)); // This will select the minimum pixel so that more GPU should not be needed.
 
 # Orbit controls
-->
+->Orbit controls allow the camera to orbit around a target.
+To use this, as with all files in the /examples directory, you will have to include the file separately in your HTML.
+
+// Import
+-> OrbitControls is an add-on, and must be imported explicitly. See Installation / Addons.
+import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+
+// Code 
+const controls = new OrbitControls( camera, renderer.domElement ); // add this before the animate()
+
+controls.update(); // add controls.update inside the animate()
+
+# dampingFactor 
+-> The damping inertia used if .enableDamping is set to true. Default is 0.05.
+Note that for this to work, you must call .update () in your animation loop.
+-> Using this we can control that how much time our element should take to stop .
+
+# enableRotate 
+-> Enable or disable horizontal and vertical rotation of the camera. Default is true.
+-> Note that it is possible to disable a single axis by setting the min and max of the polar angle or azimuth angle to the same value, which will cause the vertical or horizontal rotation to be fixed at that value.
+Eg: controls.enableRotate = false ; // This will stop the rotation of the cube even when the orbit controls are set.
+
+# enableZoom
+-> Enable or disable zooming (dollying) of the camera.
+Eg: controls.enableZoom = false ; // This will disable the zoom when we apply orbit controls.
+
+# controls.minAzimuthAngle = -Math.PI / 4;
+controls.maxAzimuthAngle = Math.PI / 4; // using this we can set the limit about how much the object should move in this case it will move 45 deg left and right horizontally.
+
+# controls.minPolarAngle = -Math.PI / 2; 
+controls.maxPolarAngle = Math.PI / 2;
+// It will control the movement/ limit the movement vertically 
+
+# controls.minDistance = 3;
+controls.maxDistance = 10; // Using this we can control how much we can zoom .
