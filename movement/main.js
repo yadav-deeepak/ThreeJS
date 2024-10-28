@@ -1,5 +1,6 @@
 import * as THREE from "three";
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+import GUI from 'lil-gui'; 
 
 const scene = new THREE.Scene();
 const camera = new THREE.PerspectiveCamera(75,window.innerWidth / window.innerHeight, 0.1, 20);
@@ -22,14 +23,7 @@ renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 renderer.render(scene, camera);
 
 const controls = new OrbitControls( camera, renderer.domElement );
-// controls.minAzimuthAngle = -Math.PI / 4;
-// controls.maxAzimuthAngle = Math.PI / 4;
 
-controls.minPolarAngle = -Math.PI / 2; 
-controls.maxPolarAngle = Math.PI / 2;
-
-controls.minDistance = 3;
-controls.maxDistance = 10;
 
 
 const mouse = {
@@ -49,12 +43,39 @@ window.addEventListener("resize", function (e) {
   camera.updateProjectionMatrix();
 });
 
+const gui = new GUI();
+const cubeFolder = gui.addFolder("Cube Properties");
+
+// GUI controls for cube size and color
+const cubeParams = {
+  width: 1,
+  height: 2,
+  depth: 3,
+  color: "#ff0000"
+};
+
+cubeFolder.add(cubeParams, "width", 0.1, 5).onChange((value) => {
+  cube.scale.x = value;
+});
+
+cubeFolder.add(cubeParams, "height", 0.1, 5).onChange((value) => {
+  cube.scale.y = value;
+});
+
+cubeFolder.add(cubeParams, "depth", 0.1, 5).onChange((value) => {
+  cube.scale.z = value;
+});
+
+cubeFolder.addColor(cubeParams, "color").onChange((value) => {
+  cube.material.color.set(value);
+});
+
+cubeFolder.open();
+
 function animate(){
     window.requestAnimationFrame(animate);
-    // cube.rotation.y += 0.01;
-    // cube.lookAt(new THREE.Vector3(mouse.x-.5,-mouse.y+.5,1));
+    cube.rotation.y += 0.01;
     controls.update();
-    // cube.rotation.y += 0.01;
     renderer.render(scene, camera);
 }
 
