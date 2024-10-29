@@ -6,10 +6,20 @@ const scene = new THREE.Scene();
 const camera = new THREE.PerspectiveCamera(75,window.innerWidth / window.innerHeight, 0.1, 20);
 
 const geometry = new THREE.BoxGeometry(1,2,3);
-const material = new THREE.MeshBasicMaterial({color: "red"});
+const material = new THREE.MeshPhysicalMaterial({color: "red"});
 const cube= new THREE.Mesh(geometry,material);
 
 camera.position.z = 5;
+
+const light = new THREE.AmbientLight("white", 0.1); // soft white light
+scene.add( light );
+
+const directionalLight = new THREE.DirectionalLight( 0xffffff, 1 );
+directionalLight.position.set(2, 2, 0);
+scene.add( directionalLight );
+
+const helper = new THREE.DirectionalLightHelper( directionalLight, 2 );
+scene.add( helper );
 
 
 scene.add(cube);
@@ -80,3 +90,4 @@ function animate(){
 }
 
 animate();
+
