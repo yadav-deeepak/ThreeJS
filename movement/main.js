@@ -21,7 +21,6 @@ scene.add( directionalLight );
 const helper = new THREE.DirectionalLightHelper( directionalLight, 2 );
 scene.add( helper );
 
-
 scene.add(cube);
 
 
@@ -54,33 +53,39 @@ window.addEventListener("resize", function (e) {
 });
 
 const gui = new GUI();
-const cubeFolder = gui.addFolder("Cube Properties");
+const lightFolder = gui.addFolder('Directional Light');
+lightFolder.add(light.position, 'x', -10, 10).name('Light X');
+lightFolder.add(light.position, 'y', -10, 10).name('Light Y');
+lightFolder.open();
 
-// GUI controls for cube size and color
-const cubeParams = {
-  width: 1,
-  height: 2,
-  depth: 3,
-  color: "#ff0000"
-};
+// const gui = new GUI();
+// const cubeFolder = gui.addFolder("Cube Properties");
 
-cubeFolder.add(cubeParams, "width", 0.1, 5).onChange((value) => {
-  cube.scale.x = value;
-});
+// // GUI controls for cube size and color
+// const cubeParams = {
+//   width: 1,
+//   height: 2,
+//   depth: 3,
+//   color: "#ff0000"
+// };
 
-cubeFolder.add(cubeParams, "height", 0.1, 5).onChange((value) => {
-  cube.scale.y = value;
-});
+// cubeFolder.add(cubeParams, "width", 0.1, 5).onChange((value) => {
+//   cube.scale.x = value;
+// });
 
-cubeFolder.add(cubeParams, "depth", 0.1, 5).onChange((value) => {
-  cube.scale.z = value;
-});
+// cubeFolder.add(cubeParams, "height", 0.1, 5).onChange((value) => {
+//   cube.scale.y = value;
+// });
 
-cubeFolder.addColor(cubeParams, "color").onChange((value) => {
-  cube.material.color.set(value);
-});
+// cubeFolder.add(cubeParams, "depth", 0.1, 5).onChange((value) => {
+//   cube.scale.z = value;
+// });
 
-cubeFolder.open();
+// cubeFolder.addColor(cubeParams, "color").onChange((value) => {
+//   cube.material.color.set(value);
+// });
+
+// cubeFolder.open();
 
 function animate(){
     window.requestAnimationFrame(animate);
