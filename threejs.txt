@@ -475,3 +475,65 @@ color - (optional) hexadecimal color of the light. Default is 0xffffff (white).
 intensity - (optional) numeric value of the light's strength/intensity. Default is 1.
 
 Creates a new DirectionalLight.
+
+# Creating lil gui panel for light 
+const gui = new GUI();
+const lightFolder = gui.addFolder('Directional Light');
+lightFolder.add(light.position, 'x', -10, 10).name('Light X');
+lightFolder.add(light.position, 'y', -10, 10).name('Light Y');
+lightFolder.open();
+
+# Point light 
+-> A light that gets emitted from a single point in all directions. A common use case for this is to replicate the light emitted from a bare lightbulb.
+-> This light can cast shadows - see PointLightShadow page for details.
+
+// Constructor
+PointLight( color : Integer, intensity : Float, distance : Number, decay : Float )
+-> color - (optional) hexadecimal color of the light. Default is 0xffffff (white).
+-> intensity - (optional) numeric value of the light's strength/intensity. Default is 1.
+-> distance - Maximum range of the light. Default is 0 (no limit).
+-> decay - The amount the light dims along the distance of the light. Default is 2.
+
+Creates a new PointLight.
+// code 
+const light = new THREE.PointLight( 0xff0000, 1, 100 );
+light.position.set( 50, 50, 50 );
+scene.add( light );
+
+# PointLight Helper 
+-> This displays a helper object consisting of a spherical mesh for visualizing a point light.
+const sphereSize = 1;
+const pointLightHelper = new THREE.PointLightHelper( pointLight, sphereSize );
+scene.add( pointLightHelper );
+
+# Spot Light 
+-> This light gets emitted from a single point in one direction, along a cone that increases in size the further from the light it gets.
+-> This light can cast shadows - see the SpotLightShadow page for details.
+
+// Constructor
+SpotLight( color : Integer, intensity : Float, distance : Float, angle : Radians, penumbra : Float, decay : Float )
+-> color - (optional) hexadecimal color of the light. Default is 0xffffff (white).
+-> intensity - (optional) numeric value of the light's strength/intensity. Default is 1.
+-> distance - Maximum range of the light. Default is 0 (no limit).
+-> angle - Maximum angle of light dispersion from its direction whose upper bound is Math.PI/2.
+-> penumbra - Percent of the spotlight cone that is attenuated due to penumbra. Takes values between zero and 1. Default is zero.
+-> decay - The amount the light dims along the distance of the light.
+-> Creates a new SpotLight.
+// code 
+const spotLight = new THREE.SpotLight( 0xffffff );
+spotLight.position.set( 100, 1000, 100 );
+spotLight.map = new THREE.TextureLoader().load( url );
+
+spotLight.castShadow = true;
+
+spotLight.shadow.mapSize.width = 1024;
+spotLight.shadow.mapSize.height = 1024;
+
+spotLight.shadow.camera.near = 500;
+spotLight.shadow.camera.far = 4000;
+spotLight.shadow.camera.fov = 30;
+
+scene.add( spotLight );
+// Spot Light helper  
+const spotLightHelper = new THREE.SpotLightHelper( spotLight );
+scene.add( spotLightHelper );
