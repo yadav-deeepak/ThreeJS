@@ -13,8 +13,8 @@ scene.add(cube);
 
 camera.position.z = 5;
 
-// const light = new THREE.AmbientLight("white", 0.1); // soft white light
-// scene.add( light );
+const light = new THREE.AmbientLight("white",1); // soft white light
+scene.add( light );
 
 // const directionalLight = new THREE.DirectionalLight( 0xffffff, 3);
 // directionalLight.position.set(4, 5, 0);
@@ -30,31 +30,31 @@ camera.position.z = 5;
 // const pointLightHelper = new THREE.PointLightHelper( pointLight, .4 );
 // scene.add( pointLightHelper );
 
-const spotLight = new THREE.SpotLight( 0xffffff );
-spotLight.position.set( 1, 3, 1);
-scene.add( spotLight );
+// const spotLight = new THREE.SpotLight( 0xffffff );
+// spotLight.position.set( 1, 3, 1);
+// scene.add( spotLight );
 
-const spotLightHelper = new THREE.SpotLightHelper( spotLight );
-scene.add( spotLightHelper );
+// const spotLightHelper = new THREE.SpotLightHelper( spotLight );
+// scene.add( spotLightHelper );
 
 // Create a new GUI instance
-const gui = new GUI();
+// const gui = new GUI();
 
-// Create a folder for controlling the spotlight
-const spotLightFolder = gui.addFolder('SpotLight Controls');
+// // Create a folder for controlling the spotlight
+// const spotLightFolder = gui.addFolder('SpotLight Controls');
 
-// Position controls for the spotlight
-spotLightFolder.add(spotLight.position, 'x', -50, 50).name('Position X');
-spotLightFolder.add(spotLight.position, 'y', -50, 50).name('Position Y');
-spotLightFolder.add(spotLight.position, 'z', -50, 50).name('Position Z');
+// // Position controls for the spotlight
+// spotLightFolder.add(spotLight.position, 'x', -50, 50).name('Position X');
+// spotLightFolder.add(spotLight.position, 'y', -50, 50).name('Position Y');
+// spotLightFolder.add(spotLight.position, 'z', -50, 50).name('Position Z');
 
-// Properties specific to spotlight
-spotLightFolder.add(spotLight, 'angle', 0, Math.PI / 2).name('Angle');
-spotLightFolder.add(spotLight, 'penumbra', 0, 1).name('Penumbra');
-spotLightFolder.add(spotLight, 'intensity', 0, 2).name('Intensity');
+// // Properties specific to spotlight
+// spotLightFolder.add(spotLight, 'angle', 0, Math.PI / 2).name('Angle');
+// spotLightFolder.add(spotLight, 'penumbra', 0, 1).name('Penumbra');
+// spotLightFolder.add(spotLight, 'intensity', 0, 2).name('Intensity');
 
-// Open the folder by default
-spotLightFolder.open();
+// // Open the folder by default
+// spotLightFolder.open();
 
 // const gui = new GUI();
 
