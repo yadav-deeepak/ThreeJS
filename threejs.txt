@@ -548,3 +548,6 @@ Raycaster( origin : Vector3, direction : Vector3, near : Float, far : Float )
 -> near — All results returned are further away than near. Near can't be negative. Default value is 0.
 -> far — All results returned are closer than far. Far can't be lower than near. Default value is Infinity.
 -> This creates a new raycaster object.
+
+# Using AI in development
+-> Install cursor AI tool 
