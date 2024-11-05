@@ -551,3 +551,21 @@ Raycaster( origin : Vector3, direction : Vector3, near : Float, far : Float )
 
 # Using AI in development
 -> Install cursor AI tool 
+
+# Using GLTF models in Threejs
+-> Create your account on sketch fab here we can get various 3D models .
+
+# GLTF Loader 
+-> A loader for glTF 2.0 resources.
+-> glTF (GL Transmission Format) is an open format specification for efficient delivery and loading of 3D content. Assets may be provided either in JSON (.gltf) or binary (.glb) format. External files store textures (.jpg, .png) and additional binary data (.bin). A glTF asset may deliver one or more scenes, including meshes, materials, textures, skins, skeletons, morph targets, animations, lights, and/or cameras.
+-> GLTFLoader uses ImageBitmapLoader whenever possible. Be advised that image bitmaps are not automatically GC-collected when they are no longer referenced, and they require special handling during the disposal process. More information in the How to dispose of objects guide.
+
+// Import  
+-> GLTFLoader is an add-on and must be imported explicitly 
+import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
+
+// Code 
+const loader = new GLTFLoader();
+loader.load ('/pokeball.glb', function(model){
+  scene.add(model.scene);
+});// this will add the model into our scene
