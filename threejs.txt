@@ -571,3 +571,14 @@ loader.load ('/pokeball.glb', function(model){
 });// this will add the model into our scene
 
 # Creating a project : The Planets  
+// Putting the planets in the circle at 0 90 180 and 270 deg 
+index/4 * (math.pi*2);
+0/4 * (math.pi*2) = 0;
+1/4 * (math.pi*2) = 90;
+2/4 * (math.pi*2) = 180;
+3/4 *(math.pi*2) = 270;
+4/4 * (math.pi*2) = 360;
+
+// In 3d plane circle equation 
+x = r * cos(theta)
+z = r * sin(theta)
