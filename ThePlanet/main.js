@@ -1,6 +1,7 @@
 import * as THREE from "three";
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 import gsap from 'gsap';
+import { RGBELoader } from "three/addons/loaders/RGBELoader.js";
 
 const scene = new THREE.Scene();
 
@@ -27,11 +28,47 @@ window.addEventListener("resize", function (e) {
 const radius = 1.3;
 const segments = 64;
 const colors = [0xff0000, 0x00ff00, 0x0000ff, 0xffff00];
+const textures = ['/public/csilla/color.png','/public/earth/map.jpg','/public/venus/map.jpg','/public/volcanic/color.png'];
 const spheres = new THREE.Group();
+
+// Create large sphere for starfield background
+const starfieldGeometry = new THREE.SphereGeometry(50, 64, 64);
+const textureLoader = new THREE.TextureLoader();
+const starTexture = textureLoader.load('/public/stars.jpg');
+starTexture.colorSpace = THREE.SRGBColorSpace;
+const starMaterial = new THREE.MeshStandardMaterial({
+    map: starTexture,
+    side: THREE.BackSide, // Render on inside of sphere
+    opacity: 0.5, 
+    transparent: true,
+});
+const starfield = new THREE.Mesh(starfieldGeometry, starMaterial);
+scene.add(starfield);
+
+
+let hdri = new RGBELoader();
+hdri.load("https://dl.polyhaven.org/file/ph-assets/HDRIs/hdr/1k/moonlit_golf_1k.hdr", function(hdritexture){
+    hdritexture.mapping = THREE.EquirectangularReflectionMapping;
+    scene.environment = hdritexture;
+}
+);
+
+
+const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
+scene.add(ambientLight);
+
+const directionalLight = new THREE.DirectionalLight(0xffffff, 1);
+directionalLight.position.set(5, 5, 5);
+scene.add(directionalLight);
+
   
 for(let i = 0; i<4; i++){
+  const textureLoader = new THREE.TextureLoader();
+  const texture = textureLoader.load(textures[i]);
+  texture.colorSpace = THREE.SRGBColorSpace;
+
 const geometry = new THREE.SphereGeometry(radius, segments,segments);
-const material = new THREE.MeshBasicMaterial({color: colors[i]});
+const material = new THREE.MeshStandardMaterial({ map: texture});
 const sphere = new THREE.Mesh(geometry, material);
 
 const angle = (i / 4) * (Math.PI *2);
@@ -53,12 +90,12 @@ setInterval(()=>{
   });
 }, 2500);
 
-const controls = new OrbitControls(camera, renderer.domElement);
+// const controls = new OrbitControls(camera, renderer.domElement);
 
 function animate(){
     window.requestAnimationFrame(animate);
     
-    controls.update();
+    // controls.update();
     renderer.render(scene, camera);
 }
 
