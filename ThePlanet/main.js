@@ -11,6 +11,24 @@ const camera = new THREE.PerspectiveCamera(25,window.innerWidth / window.innerHe
 
 camera.position.z = 9;
 
+let lastScrollTime = 0;
+const throttleDelay = 2000; // 2 seconds in milliseconds
+
+window.addEventListener('wheel', (event) => {
+    const currentTime = Date.now();
+    
+    if (currentTime - lastScrollTime >= throttleDelay) {
+        // Your wheel event handling code here
+        console.log('Wheel event triggered');
+        
+        lastScrollTime = currentTime;
+        if (event.deltaY < 0) {
+            console.log('up');
+        } else {
+            console.log('down');
+        }
+    }
+});
 
 
 
