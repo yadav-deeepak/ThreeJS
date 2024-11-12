@@ -13,22 +13,47 @@ camera.position.z = 9;
 
 let lastScrollTime = 0;
 const throttleDelay = 2000; // 2 seconds in milliseconds
+let scrollCount = 0;
 
-window.addEventListener('wheel', (event) => {
-    const currentTime = Date.now();
+function throttleWheelHandler(event){
+  const currentTime = Date.now();
     
-    if (currentTime - lastScrollTime >= throttleDelay) {
-        // Your wheel event handling code here
-        console.log('Wheel event triggered');
-        
-        lastScrollTime = currentTime;
-        if (event.deltaY < 0) {
-            console.log('up');
-        } else {
-            console.log('down');
-        }
-    }
-});
+  if (currentTime - lastScrollTime >= throttleDelay) {
+      // Your wheel event handling code here
+      console.log('Wheel event triggered');
+      
+      lastScrollTime = currentTime;
+      if (event.deltaY < 0) {
+          console.log('up');
+      } else {
+          console.log('down');
+      }
+      scrollCount = (scrollCount + 1) % 4 ;
+    
+   const headings = document.querySelectorAll(".heading");
+   gsap.to(headings, {
+    duration: 1,
+    y:`-=${100}%`,
+    ease: "power2.inOut", 
+   });
+
+   gsap.to(spheres.rotation,{
+    duration: 1,
+    y: `-=${Math.PI /2}%`,
+    ease: "power2.inOut",
+   });
+
+   if(scrollCount === 0){
+    gsap.to(headings,{
+      duration: 1,
+      y: `0`,
+      ease: "power2.inOut",
+    });
+   }
+}
+}
+
+window.addEventListener('wheel', throttleWheelHandler);
 
 
 
@@ -79,6 +104,7 @@ const directionalLight = new THREE.DirectionalLight(0xffffff, 1);
 directionalLight.position.set(5, 5, 5);
 scene.add(directionalLight);
 
+const spheresMesh = [];
   
 for(let i = 0; i<4; i++){
   const textureLoader = new THREE.TextureLoader();
@@ -88,6 +114,8 @@ for(let i = 0; i<4; i++){
 const geometry = new THREE.SphereGeometry(radius, segments,segments);
 const material = new THREE.MeshStandardMaterial({ map: texture});
 const sphere = new THREE.Mesh(geometry, material);
+
+spheresMesh.push(sphere);
 
 const angle = (i / 4) * (Math.PI *2);
 const orbitRadius = 4.5;
@@ -100,19 +128,22 @@ spheres.rotation.x = 0.1;
 spheres.position.y = -0.8;
 scene.add(spheres);
 
-setInterval(()=>{
-  gsap.to(spheres.rotation, {
-    y: `+=${Math.PI / 2}`,
-    duration: 2,
-    ease: "expo.easeInOut",
-  });
-}, 2500);
+// setInterval(()=>{
+//   gsap.to(spheres.rotation, {
+//     y: `+=${Math.PI / 2}`,
+//     duration: 2,
+//     ease: "expo.easeInOut",
+//   });
+// }, 2500);
 
 // const controls = new OrbitControls(camera, renderer.domElement);
-
+const clock = new THREE.Clock();
 function animate(){
     window.requestAnimationFrame(animate);
-    
+    for( let i = 0; i < spheresMesh.length; i++){
+      const sphere = spheresMesh[i];
+      sphere.rotation.y = clock.getElapsedTime() * 0.05;
+    }
     // controls.update();
     renderer.render(scene, camera);
 }
