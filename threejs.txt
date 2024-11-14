@@ -583,4 +583,15 @@ index/4 * (math.pi*2);
 x = r * cos(theta)
 z = r * sin(theta)
 
-# Shaders
+# Shaders 
+-> Shaders are programs that run on the GPU rather than the CPU, written in GLSL (OpenGL Shading Language).
+-> They are used to create custom materials and visual effects by controlling how each pixel is rendered.
+-> There are two main types of shaders:
+   - Vertex shaders: Manipulate the position and attributes of vertices
+   - Fragment shaders: Determine the color and other properties of each pixel
+-> Shaders can be used to create effects like:
+   - Custom lighting and shadows
+   - Animated materials
+   - Post-processing effects
+   - Procedural textures and patterns
+-> In Three.js, shaders can be implemented using ShaderMaterial or RawShaderMaterial
