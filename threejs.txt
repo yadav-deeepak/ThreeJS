@@ -595,3 +595,5 @@ z = r * sin(theta)
    - Post-processing effects
    - Procedural textures and patterns
 -> In Three.js, shaders can be implemented using ShaderMaterial or RawShaderMaterial
+
+# Understanding Vertex Shaders
