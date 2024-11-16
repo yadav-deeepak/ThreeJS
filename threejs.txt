@@ -597,3 +597,19 @@ z = r * sin(theta)
 -> In Three.js, shaders can be implemented using ShaderMaterial or RawShaderMaterial
 
 # Understanding Vertex Shaders
+-> Vertex shaders are programs that run on each vertex of a 3D model
+-> They determine how vertices are positioned and transformed in 3D space
+-> Key responsibilities include:
+   - Transforming vertex positions from model space to screen space
+   - Computing vertex lighting
+   - Passing data to fragment shaders
+-> Common vertex shader operations:
+   - Matrix transformations (model, view, projection)
+   - Vertex animation
+   - Normal calculations
+   - UV coordinate manipulation
+-> Example vertex shader structure:
+   void main() {
+     // Transform vertex position
+     gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+   }
