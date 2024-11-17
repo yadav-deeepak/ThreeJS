@@ -613,3 +613,34 @@ z = r * sin(theta)
      // Transform vertex position
      gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
    }
+
+# Understanding Fragment Shaders In ThreeJS 
+-> Fragment shaders (also called pixel shaders) run on each pixel being rendered
+-> They determine the final color of each pixel on the screen
+-> Key responsibilities include:
+   - Computing pixel colors
+   - Handling textures
+   - Implementing lighting calculations
+   - Creating special effects
+-> Common fragment shader operations:
+   - Color calculations
+   - Texture sampling
+   - Lighting and shading
+   - Alpha transparency
+   - Special effects (fog, reflection, etc.)
+-> Example fragment shader structure:
+   void main() {
+     // Set pixel color (red, green, blue, alpha)
+     gl_FragColor = vec4(1.0, 0.0, 0.0, 1.0);
+   }
+-> Fragment shaders can access:
+   - Varying variables from vertex shaders
+   - Uniform variables (global shader values)
+   - Textures and samplers
+   - Built-in GLSL functions
+-> Used extensively for:
+   - Custom materials
+   - Post-processing effects
+   - Advanced rendering techniques
+   - Visual effects like gradients, patterns
+
